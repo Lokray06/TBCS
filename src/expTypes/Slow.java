@@ -1,23 +1,21 @@
 package expTypes;
 
+import lists.exp.SlowLookup;
 import services.CalculateLevel;
 
 public class Slow implements CalculateLevel
 {
+    SlowLookup table = new SlowLookup();
 
     @Override
     public byte calculateLevel (int exp)
     {
-        return (byte) Math.ceil(Math.pow((exp / 1.25),(double)1/3));
+        return table.getLevelForExperience(exp);
     }
 
     @Override
-    public int calculateEXP(byte level) {
-        return (int)(1.25*(Math.pow(level,3)));
-    }
-
-    private int calculateExp (byte level)
+    public int calculateExp (byte level)
     {
-        return (int) (5 * Math.pow(level, 3))/4;
+        return (int) table.getExperienceForLevel(level);
     }
 }

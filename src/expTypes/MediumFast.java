@@ -1,32 +1,21 @@
 package expTypes;
 
+import lists.exp.MediumFastLookup;
 import services.CalculateLevel;
 
 public class MediumFast implements CalculateLevel
 {
+    MediumFastLookup table = new MediumFastLookup();
 
     @Override
     public byte calculateLevel (int exp)
     {
-        for (byte level = 1; level <= 100; level++)
-        {
-            int expAtLevel = calculateExp(level);
-            if (exp < expAtLevel)
-            {
-                return (byte) (level - 1);
-            }
-        }
-        return 100; // Max level
+        return table.getLevelForExperience(exp);
     }
 
     @Override
-    public int calculateEXP(byte level)
+    public int calculateExp (byte level)
     {
-        return (int)Math.pow(level, 3);
-    }
-
-    private int calculateExp (byte level)
-    {
-        return (int) Math.pow(level, 3);
+        return (int) table.getExperienceForLevel(level);
     }
 }
