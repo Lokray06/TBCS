@@ -5,10 +5,10 @@ import java.util.List;
 
 import objects.PokemonHolder;
 
-public class PokemonDatabase {
+public class PokemonDatabaseOld {
     public static List<PokemonHolder> pokemons;
 
-    public PokemonDatabase() {
+    public PokemonDatabaseOld() {
         pokemons = new ArrayList<>();
 
         // Generation I
@@ -163,7 +163,6 @@ public class PokemonDatabase {
         pokemons.add(new PokemonHolder(149, "Dragonite", new int[]{14, 10}, new int[]{61}, (byte)6));
         pokemons.add(new PokemonHolder(150, "Mewtwo", new int[]{11}, new int[]{39}, (byte)7));
         pokemons.add(new PokemonHolder(151, "Mew", new int[]{11}, new int[]{39}, (byte)7));
-
     }
 
     public List<PokemonHolder> getPokemons() {

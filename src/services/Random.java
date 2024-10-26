@@ -28,4 +28,14 @@ public class Random
         byte n = (byte)(Math.floor(0+(range-0)*ran));
         return n;
     }
+
+    public String ability(String[] abilities)
+    {
+        MyMath toRange = new MyMath();
+        double ran = Math.random();
+        int length =  abilities.length;
+        int newRan = (int) toRange.numberToRange(ran, 0, 1, 0, abilities.length);
+
+        return abilities[newRan];
+    }
 }

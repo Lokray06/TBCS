@@ -7,7 +7,7 @@ import java.util.Map;
 import expTypes.*;
 import lists.Nature;
 import lists.Pokedex;
-import lists.PokemonDatabase;
+import lists.PokemonDatabaseOld;
 import lists.Stats;
 import objects.Attack;
 import objects.PokemonHolder;
@@ -16,11 +16,11 @@ import services.CalculateLevel;
 import services.MathS;
 import services.StatsCalculatorInterface;
 
-public class Pokemon
+public class PokemonOld
 {
     StatsCalculatorInterface mathS = new MathS();
     services.Random random = new services.Random();
-    lists.PokemonDatabase db = new PokemonDatabase();
+    PokemonDatabaseOld db = new PokemonDatabaseOld();
 
     // Misc
     private final int id;
@@ -47,7 +47,7 @@ public class Pokemon
     // Attacks
     private ArrayList<Attack> attacks = new ArrayList<>();
 
-    public Pokemon(int pokedexNumber)
+    public PokemonOld(int pokedexNumber)
     {
         this.pokedexNumber = pokedexNumber;
         this.defaultName = Pokedex.pokedex.get(pokedexNumber);
@@ -152,7 +152,7 @@ public class Pokemon
         return defaultName;
     }
 
-    public int getId (Pokemon pokemon)
+    public int getId (PokemonOld pokemon)
     {
         return pokemon.id;
     }

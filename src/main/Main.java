@@ -1,18 +1,15 @@
 package main;
 
 import pokemons.Pokemon;
-import services.PrintInterface;
-import services.PrintPokemonImplementation;
+import services.PrintPokemon;
 
 public class Main
 {
+    static PrintPokemon pokemonPrinter = new PrintPokemon();
+
     public static void main(String[] args)
     {
-        PrintInterface pokemonPrinter = new PrintPokemonImplementation();
-
-        Pokemon pokemon = new Pokemon(12);
-        pokemon.addExp(1000000);
+        Pokemon pokemon = new Pokemon(46);
         pokemonPrinter.print(pokemon);
-
     }
 }
