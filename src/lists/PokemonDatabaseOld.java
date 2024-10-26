@@ -1,10 +1,17 @@
 package lists;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
-import objects.PokemonHolder;
+public class PokemonDatabase
+{
+    // Store Pokémon data
+    public static Map<Integer, Map<String, String>> pokedexData = new HashMap<>();
 
+<<<<<<<< HEAD:src/lists/PokemonDatabaseOld.java
 public class PokemonDatabaseOld {
     public static List<PokemonHolder> pokemons;
 
@@ -167,5 +174,52 @@ public class PokemonDatabaseOld {
 
     public List<PokemonHolder> getPokemons() {
         return pokemons;
+========
+    static {
+        // Load the data when the class is first used
+        try (BufferedReader br = new BufferedReader(new FileReader("C:\\dev\\java\\TBCS1\\src\\lists\\database.csv"))) {
+            br.readLine();
+            String line; // skip headers
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+                int dexnum = Integer.parseInt(values[0].replaceAll("\"", ""));
+                Map<String, String> data = new HashMap<>();
+                data.put("dexnum", values[0].replaceAll("\"", "").trim());
+                data.put("name", values[1].replaceAll("\"", "").trim());
+                data.put("generation", values[2].replaceAll("\"", "").trim());
+                data.put("type1", values[3].replaceAll("\"", "").trim());
+                data.put("type2", values[4].replaceAll("\"", "").trim());
+                data.put("species", values[5].replaceAll("\"", "").trim());
+                data.put("height", values[6].replaceAll("\"", "").trim());
+                data.put("weight", values[7].replaceAll("\"", "").trim());
+                data.put("ability1", values[8].replaceAll("\"", "").trim());
+                data.put("ability2", values[9].replaceAll("\"", "").trim());
+                data.put("hidden_ability", values[10].replaceAll("\"", "").trim());
+                data.put("hp", values[11].replaceAll("\"", "").trim());
+                data.put("attack", values[12].replaceAll("\"", "").trim());
+                data.put("defense", values[13].replaceAll("\"", "").trim());
+                data.put("sp_atk", values[14].replaceAll("\"", "").trim());
+                data.put("sp_def", values[15].replaceAll("\"", "").trim());
+                data.put("speed", values[16].replaceAll("\"", "").trim());
+                data.put("total", values[17].replaceAll("\"", "").trim());
+                data.put("ev_yield", values[18].replaceAll("\"", "").trim());
+                data.put("catch_rate", values[19].replaceAll("\"", "").trim());
+                data.put("base_friendship", values[20].replaceAll("\"", "").trim());
+                data.put("base_exp", values[21].replaceAll("\"", "").trim());
+                data.put("growth_rate", values[22].replaceAll("\"", "").trim());
+                data.put("egg_group1", values[23].replaceAll("\"", "").trim());
+                data.put("egg_group2", values[24].replaceAll("\"", "").trim());
+                data.put("percent_male", values[25].replaceAll("\"", "").trim());
+                data.put("percent_female", values[26].replaceAll("\"", "").trim());
+                data.put("egg_cycles", values[27].replaceAll("\"", "").trim());
+                data.put("special_group", values[28].replaceAll("\"", "").trim());
+
+                pokedexData.put(dexnum, data);
+            }
+        } catch (IOException e) {
+            //noinspection CallToPrintStackTrace
+            e.printStackTrace();
+        }
+>>>>>>>> 324e347 (5th commit i think, ive lost the count):src/lists/PokemonDatabase.java
     }
 }
