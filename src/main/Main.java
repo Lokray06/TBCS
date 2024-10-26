@@ -9,7 +9,8 @@ public class Main
 
     public static void main(String[] args)
     {
-        Pokemon pokemon = new Pokemon(46);
+        Pokemon pokemon = new Pokemon(286);
+        pokemon.setExp(800000);
         pokemonPrinter.print(pokemon);
     }
 }

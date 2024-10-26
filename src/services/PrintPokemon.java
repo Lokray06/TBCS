@@ -6,6 +6,10 @@ public class PrintPokemon
 {
     public void print (Pokemon pokemon)
     {
+        pokemon.updateData();
+
+        int id = pokemon.getId();
+
         int dexnum = pokemon.getDexnum();
         int level = pokemon.getLevel();
         String type1 = pokemon.getType1();
@@ -15,13 +19,14 @@ public class PrintPokemon
 
         String abilityString = pokemon.getAbility();
         String name = pokemon.getName();
-        String nature = "//TODO: nature";
+        String nature = pokemon.getNatureString();
 
-        int[] stats = pokemon.getBase();
+        int[] stats = pokemon.getStats();
+        int[] baseStats = pokemon.getBase();
         int[] IV = pokemon.getIv();
         int[] EV = pokemon.getEv();
 
-        System.out.println("ID: " + dexnum + ", SID: " + "//TODO");
+        System.out.println("ID: " + id + ", SID: " + "//TODO");
 
         // POKEDEX Nº, NAME, EXP, LVL, GROWRATE
         System.out.println("Nº: " + dexnum + ", Pokemon: " + name + ", Exp: " + exp +", Lvl: " + level + ", Growth rate: " + growthRate);
@@ -39,7 +44,7 @@ public class PrintPokemon
         System.out.println("Stats:");
         printArray(stats);
         System.out.println("Base: ");
-        printArray(stats);
+        printArray(baseStats);
         System.out.println("IV: ");
         printArray(IV);
         System.out.println("EV: ");

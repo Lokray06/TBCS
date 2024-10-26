@@ -98,7 +98,7 @@ public class Nature {
     }
 
     // Method to get the name of a nature
-    public static String getNatureName(int id) {
+    public String getNatureName(int id) {
         return NATURE_NAMES[(id - 1)]; // Return the name based on 1-based ID
     }
 }

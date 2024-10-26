@@ -1,20 +1,17 @@
 package objects;
 
-import java.util.ArrayList;
+import pokemons.Pokemon;
 
-import pokemons.PokemonOld;
+import java.util.ArrayList;
 
 public class PokemonManager
 {
-    public static ArrayList<PokemonOld> pokemons = new ArrayList<PokemonOld>();
+    public static ArrayList<Pokemon> pokemons = new ArrayList<Pokemon>();
 
-    public static PokemonOld search(int id)
+    public static Pokemon search(int id)
     {
-        for(int i = 0; i < pokemons.size(); i++)
-        {
-            PokemonOld pokemon = pokemons.get(i);
-            if(pokemon.getId(pokemon) == id)
-            {
+        for (Pokemon pokemon : pokemons) {
+            if (pokemon.getId() == id) {
                 return pokemon;
             }
         }
