@@ -11,7 +11,7 @@ public class CombatMainMenu implements MenuInterface
     @Override
     public void display()
     {
-        printer.clear();
+        //printer.clear();
         System.out.println("");
         System.out.println("");
         System.out.println("1. Attack");
