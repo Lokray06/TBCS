@@ -1,4 +1,4 @@
-package lists;
+package lists.data;
 
 import java.util.HashMap;
 

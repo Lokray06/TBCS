@@ -1,6 +1,6 @@
 package expTypes;
 
-import lists.exp.ErraticLookup;
+import lists.data.exp.ErraticLookup;
 import services.CalculateLevel;
 
 public class Erratic implements CalculateLevel

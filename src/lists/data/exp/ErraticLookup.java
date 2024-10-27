@@ -1,4 +1,4 @@
-package lists.exp;
+package lists.data.exp;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -111,24 +111,28 @@ public class ErraticLookup {
         experienceTable.add(591882); // Level 98
         experienceTable.add(600000); // Level 99
     }
-
+    
     // Method to get the experience for a given level
-    public double getExperienceForLevel(int level)
+    public int getExperienceForLevel(int level)
     {
-        if (level < 1 || level > 100) {
+        if(level < 1 || level > 100)
+        {
             throw new IllegalArgumentException("Level must be between 1 and 100");
         }
         return experienceTable.get(level - 1);
     }
-
+    
     public byte getLevelForExperience(int exp)
     {
-        // Iterate through the experience table to find the corresponding level
-        for (int level = 1; level <= 100; level++) {
-            if (exp < experienceTable.get(level - 1)) {
-                return (byte) (level - 1);  // Return the previous level if exp is less
+        if(exp == 0)
+            return 0;
+        for(int level = 1; level < experienceTable.size(); level++)
+        {
+            if(exp < experienceTable.get(level))
+            {
+                return (byte) (level);
             }
         }
-        return 100;  // Return max level if exp exceeds the highest level threshold
+        return 100; // If experience exceeds all thresholds, return max level
     }
 }

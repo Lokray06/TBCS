@@ -1,4 +1,4 @@
-package lists;
+package lists.data;
 
 import objects.Attack;
 import java.util.ArrayList;

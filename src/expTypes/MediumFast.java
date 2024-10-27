@@ -1,6 +1,6 @@
 package expTypes;
 
-import lists.exp.MediumFastLookup;
+import lists.data.exp.MediumFastLookup;
 import services.CalculateLevel;
 
 public class MediumFast implements CalculateLevel

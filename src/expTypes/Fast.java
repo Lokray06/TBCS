@@ -1,6 +1,6 @@
 package expTypes;
 
-import lists.exp.FastLookup;
+import lists.data.exp.FastLookup;
 import services.CalculateLevel;
 
 public class Fast implements CalculateLevel

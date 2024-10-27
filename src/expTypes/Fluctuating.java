@@ -1,6 +1,6 @@
 package expTypes;
 
-import lists.exp.FluctuatingLookup;
+import lists.data.exp.FluctuatingLookup;
 import services.CalculateLevel;
 
 public class Fluctuating implements CalculateLevel

@@ -1,39 +1,41 @@
-package lists.exp;
+package lists.data.exp;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FluctuatingLookup {
-
-    // Creating a static list to store experience values for levels 1 to 100
-    private final List<Integer> experienceTable = new ArrayList<>();
-
+public class FluctuatingLookup
+{
+    
+    // Static list to store experience values for levels 0 to 99
+    private final List<Integer> experienceTable = new ArrayList<>(100);
+    
+    // Static initialization block to populate the experience table
     public FluctuatingLookup()
     {
-        experienceTable.add(0); // Level 0
-        experienceTable.add(4); // Level 1
-        experienceTable.add(13); // Level 2
-        experienceTable.add(32); // Level 3
-        experienceTable.add(65); // Level 4
-        experienceTable.add(112); // Level 5
-        experienceTable.add(178); // Level 6
-        experienceTable.add(276); // Level 7
-        experienceTable.add(393); // Level 8
-        experienceTable.add(540); // Level 9
-        experienceTable.add(745); // Level 10
-        experienceTable.add(967); // Level 11
-        experienceTable.add(1230); // Level 12
-        experienceTable.add(1591); // Level 13
-        experienceTable.add(1957); // Level 14
-        experienceTable.add(2457); // Level 15
-        experienceTable.add(3046); // Level 16
-        experienceTable.add(3732); // Level 17
-        experienceTable.add(4526); // Level 18
-        experienceTable.add(5440); // Level 19
-        experienceTable.add(6482); // Level 20
-        experienceTable.add(7666); // Level 21
-        experienceTable.add(9003); // Level 22
-        experienceTable.add(10506); // Level 23
+        experienceTable.add(0); // Level 1
+        experienceTable.add(4); // Level 2
+        experienceTable.add(13); // Level 3
+        experienceTable.add(32); // Level 4
+        experienceTable.add(65); // Level 5
+        experienceTable.add(112); // Level 6
+        experienceTable.add(178); // Level 7
+        experienceTable.add(276); // Level 8
+        experienceTable.add(393); // Level 9
+        experienceTable.add(540); // Level 10
+        experienceTable.add(745); // Level 11
+        experienceTable.add(967); // Level 12
+        experienceTable.add(1230); // Level 13
+        experienceTable.add(1591); // Level 14
+        experienceTable.add(1957); // Level 15
+        experienceTable.add(2457); // Level 16
+        experienceTable.add(3046); // Level 17
+        experienceTable.add(3732); // Level 18
+        experienceTable.add(4526); // Level 19
+        experienceTable.add(5440); // Level 20
+        experienceTable.add(6482); // Level 21
+        experienceTable.add(7666); // Level 22
+        experienceTable.add(9003); // Level 23
+        experienceTable.add(10506); // Level 24
         experienceTable.add(12187); // Level 24
         experienceTable.add(14060); // Level 25
         experienceTable.add(16140); // Level 26
@@ -108,27 +110,31 @@ public class FluctuatingLookup {
         experienceTable.add(1415577); // Level 95
         experienceTable.add(1460276); // Level 96
         experienceTable.add(1524731); // Level 97
-        experienceTable.add(1571884); // Level 98
-        experienceTable.add(1640000); // Level 99
+        experienceTable.add(1571884); // Level 99
+        experienceTable.add(1640000); // Level 100
     }
-
+    
     // Method to get the experience for a given level
-    public double getExperienceForLevel(int level)
+    public int getExperienceForLevel(int level)
     {
-        if (level < 1 || level > 100) {
+        if(level < 1 || level > 100)
+        {
             throw new IllegalArgumentException("Level must be between 1 and 100");
         }
         return experienceTable.get(level - 1);
     }
-
+    
     public byte getLevelForExperience(int exp)
     {
-        // Iterate through the experience table to find the corresponding level
-        for (int level = 1; level <= 100; level++) {
-            if (exp < experienceTable.get(level - 1)) {
-                return (byte) (level - 1);  // Return the previous level if exp is less
+        if(exp == 0)
+            return 0;
+        for(int level = 1; level < experienceTable.size(); level++)
+        {
+            if(exp < experienceTable.get(level))
+            {
+                return (byte) (level);
             }
         }
-        return 100;  // Return max level if exp exceeds the highest level threshold
+        return 100; // If experience exceeds all thresholds, return max level
     }
 }

@@ -1,6 +1,6 @@
 package expTypes;
 
-import lists.exp.SlowLookup;
+import lists.data.exp.SlowLookup;
 import services.CalculateLevel;
 
 public class Slow implements CalculateLevel
