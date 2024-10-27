@@ -3,6 +3,8 @@ package services;
 import lists.Party;
 import pokemons.Pokemon;
 
+import java.io.IOException;
+
 public class CombatPrinter
 {
     public static final char alive = '◉';
@@ -66,5 +68,23 @@ public class CombatPrinter
         System.out.println(pokemon.getName() + ", Lvl: " + pokemon.getLevel());
         System.out.println("HP: " + pokemon.getHp() + "/" + pokemon.getBaseHp());
         printArray(partyState(party));
+    }
+    
+    public void clear() throws IOException
+    {
+        Runtime.getRuntime().exec("cls");
+        System.out.println("\u001B[2J");
+        String lowerOSName = System.getProperty("os.name").toLowerCase();
+        
+        if(lowerOSName.contains("window")) {
+            try {
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            } catch (IOException | InterruptedException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.print("\033[H\033[2J");
+            System.out.flush();
+        }
     }
 }
