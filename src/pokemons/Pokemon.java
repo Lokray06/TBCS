@@ -51,6 +51,7 @@ public class Pokemon
     private int level;
     private String genre;
     private char genreSymbol;
+    private boolean isFainted;
     
     // Stats
     private int[] stats;
@@ -63,7 +64,6 @@ public class Pokemon
     private int baseSpDef;
     private int baseSpeed;
     private int baseTotal;  // = hp + attack + defense + spAtck + spDef + speed;
-    
     private int[] base = new int[6];
     
     // IV
@@ -143,11 +143,18 @@ public class Pokemon
             
             // Other
             setGrowthRate(data.get("growth_rate"));
+            updateData();
         }
         else
         {
             System.out.println("No data found for pokemon Nº: " + dexnum);
         }
+    }
+    
+    public Pokemon(int dexnum, int exp, String genre)
+    {
+        Map<String, String> data = pokedexData.get(dexnum);
+        this(dexnum, data.get("name"), genre, exp, false);
     }
     
     public Pokemon(int dexnum, int exp)
@@ -166,6 +173,7 @@ public class Pokemon
     {
         setLevel(updateLevel(growthRate));
         setStats(calculateStats());
+        setHp(getBaseHp());
     }
     
     public int getDexnum()
@@ -715,7 +723,6 @@ public class Pokemon
     {
         if(!isHiddenPokemon)
         {
-            System.out.println(ability2);
             if(ability2 != null && !ability2.trim().isEmpty())
             {
                 abilities = new String[2];
@@ -729,12 +736,10 @@ public class Pokemon
                 abilities[0] = ability1;
                 
             }
-            System.out.println("Possible abilities: " + ability1 + ", " + ability2);
             setAbility(this.abilities);
         }
         else
         {
-            System.out.println("Possible abilities: " + ability1 + ", " + ability2);
             ability = hiddenAbility;
         }
     }
@@ -806,32 +811,26 @@ public class Pokemon
             case "Erratic":
                 CalculateLevel erratic = new Erratic();
                 level = erratic.calculateLevel(exp);
-                System.out.println("erratic");
                 break;
             case "Fast":
                 CalculateLevel fast = new Fast();
                 level = fast.calculateLevel(exp);
-                System.out.println("Fast");
                 break;
             case "Fluctuating":
                 CalculateLevel fluctuating = new Fluctuating();
                 level = fluctuating.calculateLevel(exp);
-                System.out.println("Fluctuating");
                 break;
             case "Medium Fast":
                 CalculateLevel medFast = new MediumFast();
                 level = medFast.calculateLevel(exp);
-                System.out.println("MedFast");
                 break;
-            case "MediumSlow":
+            case "Medium Slow":
                 CalculateLevel medSlow = new MediumSlow();
                 level = medSlow.calculateLevel(exp);
-                System.out.println("MedSlow");
                 break;
             case "Slow":
                 CalculateLevel slow = new Slow();
                 level = slow.calculateLevel(exp);
-                System.out.println("Slow");
                 break;
             default:
                 level = 0;
@@ -875,5 +874,44 @@ public class Pokemon
         {
             genreSymbol = '♀';
         }
+    }
+    
+    public boolean isFainted()
+    {
+        return isFainted;
+    }
+    
+    public void setFainted(boolean fainted)
+    {
+        isFainted = fainted;
+    }
+    
+    public void takeDamage(int damage)
+    {
+        if(hp-damage > 0)
+        {
+            addHp(-damage);
+        }
+        else
+        {
+            hp = 0;
+        }
+    }
+    
+    public void heal(int heal)
+    {
+        if(hp + heal < baseHp)
+        {
+            addHp(heal);
+        }
+        else
+        {
+            hp = baseHp;
+        }
+    }
+    
+    public void addHp(int hp)
+    {
+        this.hp += hp;
     }
 }
