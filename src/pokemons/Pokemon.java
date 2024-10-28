@@ -111,6 +111,7 @@ public class Pokemon
             setGenreSymbol();
             setNickname(nickname);
             setExp(exp);
+            setIsHidden(isHiddenPokemon);
             
             // Pokedex
             setDexnum(Integer.parseInt(data.get("dexnum")));

@@ -13,7 +13,7 @@ public class PokemonDatabase
     
     static {
         // Load the data when the class is first used
-        try (BufferedReader br = new BufferedReader(new FileReader("C:\\dev\\java\\TBCS1\\src\\lists\\data\\database1.csv"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("src/lists/data/database1.csv"))) {
             String line = br.readLine(); // Skip headers
             while ((line = br.readLine()) != null) {
                 // Split by commas not inside quotes

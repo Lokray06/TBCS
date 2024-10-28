@@ -41,6 +41,17 @@ public class Party
     {
         return pokemons;
     }
+
+    public Pokemon[] getPokemonsNotNull()
+    {
+        int length = this.getLength();
+        Pokemon[] pokemons = new Pokemon[length];
+        for(int i = 0; i < pokemons.length; i++)
+        {
+            pokemons[i] = getPokemon(i);
+        }
+        return pokemons;
+    }
     
     public Pokemon getPokemon(int index)
     {
