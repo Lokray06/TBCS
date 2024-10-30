@@ -5,6 +5,8 @@ import system.Engine;
 import graphics.UIHandler;
 import services.PrintParty;
 
+import javax.swing.*;
+
 public class Main
 {
     public static void main(String[] args)
