@@ -24,7 +24,7 @@ public class Main
         
         Combat combat = new Combat(playerParty, enemyParty);
          */
-        
+
         UIHandler ui = new UIHandler();
     }
 }
