@@ -15,181 +15,219 @@ import java.util.Map;
 
 import static lists.data.PokemonDatabase.pokedexData;
 
-public class UIHandler {
-    private static Pokemon selected = null; // Declare selected as a static variable
-
-    public UIHandler() {
-        // Apply FlatLaf look and feel
+public class UIHandler
+{
+    private static Pokemon selected = null;
+    
+    public UIHandler()
+    {
         FlatLightLaf.setup();
-        UIManager.put("Button.arc", 15);      // Rounded corners for buttons
-        UIManager.put("Component.focusWidth", 1); // Thinner focus border
-
+        UIManager.put("Button.arc", 15);
+        UIManager.put("Component.focusWidth", 1);
+        
         SwingUtilities.invokeLater(UIHandler::createAndShowGUI);
     }
-
-    private static void createAndShowGUI() {
+    
+    private static void createAndShowGUI()
+    {
         Party playerParty = new Party(null);
         Party enemyParty = new Party(null);
-
-        JFrame frame = new JFrame("Pokemon Combat");
+        
+        JFrame frame = new JFrame("Pokemon Battle");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800, 600);
+        frame.setSize(1000, 700);
         frame.setLayout(new BorderLayout());
-
-        // Set an icon in the top-left corner
-        frame.setIconImage(new ImageIcon("path/to/icon.png").getImage());
-
-        // Create the menu bar
+        
+        frame.setIconImage(new ImageIcon("src/sprites/battle/null.png").getImage());
+        
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu("File");
         JMenu configMenu = new JMenu("Config");
         menuBar.add(fileMenu);
         menuBar.add(configMenu);
         frame.setJMenuBar(menuBar);
-
-        // Tabs with content
+        
         JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.addTab("Player's Party", createPartyPanel(playerParty));
         tabbedPane.addTab("Enemy's Party", createPartyPanel(enemyParty));
         tabbedPane.addTab("Arena", createArenaPanel());
         frame.add(tabbedPane, BorderLayout.CENTER);
-
+        
         frame.setVisible(true);
     }
-
-    private static JPanel createPartyPanel(Party party) {
-        String[] pokedex = new String[pokedexData.size() + 1]; // Include index 0
-        pokedex[0] = "Select a Pokémon"; // Placeholder for selection
-        for (int i = 1; i < pokedex.length; i++) {
+    
+    private static JPanel createPartyPanel(Party party)
+    {
+        String[] pokedex = new String[pokedexData.size() + 1];
+        pokedex[0] = "Select a Pokémon";
+        for (int i = 1; i < pokedex.length; i++)
+        {
             Map<String, String> data = pokedexData.get(i);
             pokedex[i] = data.get("name");
         }
-
+        
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-
-        // Left Panel (Party List and Buttons)
+        
         JPanel leftPanel = new JPanel();
         leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
-
-        // Party List
+        
         JList<String> partyList = new JList<>();
         partyList.setBorder(BorderFactory.createTitledBorder("Party"));
-        leftPanel.add(new JScrollPane(partyList)); // Added JScrollPane for better usability
-
-        // Selection listener to update selected Pokémon
-        partyList.addListSelectionListener(new ListSelectionListener() {
+        leftPanel.add(new JScrollPane(partyList));
+        
+        partyList.addListSelectionListener(new ListSelectionListener()
+        {
             @Override
-            public void valueChanged(ListSelectionEvent e) {
-                if (!e.getValueIsAdjusting()) {
+            public void valueChanged(ListSelectionEvent e)
+            {
+                if (!e.getValueIsAdjusting())
+                {
                     int index = partyList.getSelectedIndex();
-                    if (index != -1) {
-                        selected = party.getPokemon(index); // Update selected Pokémon
+                    if (index != -1)
+                    {
+                        selected = party.getPokemon(index);
                     }
                 }
             }
         });
-
-        // Buttons with rounded edges
-        JPanel buttonPanel = new JPanel(new GridLayout(1, 3, 2, 2));
-        JButton addButton = new JButton("Add");
+        
+        JPanel buttonPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        
         JButton removeButton = new JButton("Remove");
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        buttonPanel.add(removeButton, gbc);
+        
         JButton addRandomButton = new JButton("Add Random");
-        buttonPanel.add(addButton);
-        buttonPanel.add(removeButton);
-        buttonPanel.add(addRandomButton);
+        gbc.gridy = 1;
+        buttonPanel.add(addRandomButton, gbc);
+        
+        JButton addButton = new JButton("Add");
+        gbc.gridy = 2;
+        gbc.gridwidth = 2;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        buttonPanel.add(addButton, gbc);
+        
         leftPanel.add(Box.createRigidArea(new Dimension(0, 5)));
         leftPanel.add(buttonPanel);
-
+        
         addButton.addActionListener(actionEvent -> {
-            // Assuming the 'add()' method adds a Pokémon to the party
             party.add();
-            updateData(partyList, party); // Pass the list to update
+            updateData(partyList, party);
         });
-
+        
         removeButton.addActionListener(actionEvent -> {
-            if (selected != null) { // Ensure selected is not null
+            if (selected != null)
+            {
                 party.remove(selected);
-                updateData(partyList, party); // Pass the list to update
-                selected = null; // Clear selection after removal
+                updateData(partyList, party);
+                selected = null;
             }
         });
-
+        
         panel.add(leftPanel, BorderLayout.WEST);
-
-        // Right Panel (Editor)
+        
         JPanel editorPanel = createEditorPanel(pokedex);
         panel.add(editorPanel, BorderLayout.CENTER);
-
+        
         return panel;
     }
-
-    private static void updateData(JList<String> partyList, Party party) {
+    
+    private static void updateData(JList<String> partyList, Party party)
+    {
         String[] listOfPokemons = new String[party.getLength()];
-        for (int i = 0; i < party.getLength(); i++) {
+        for (int i = 0; i < party.getLength(); i++)
+        {
             listOfPokemons[i] = party.getPokemon(i).getName();
         }
-        partyList.setListData(listOfPokemons); // Correctly update the JList's data
+        partyList.setListData(listOfPokemons);
     }
-
-    private static JPanel createEditorPanel(String[] pokedex) {
-        JPanel editorPanel = new JPanel();
-        editorPanel.setLayout(new BoxLayout(editorPanel, BoxLayout.Y_AXIS));
+    
+    private static JPanel createEditorPanel(String[] pokedex)
+    {
+        JPanel editorPanel = new JPanel(new GridBagLayout());
         editorPanel.setBorder(BorderFactory.createTitledBorder("Editor"));
-
-        // Image placeholder with padding
-        JLabel imageLabel = new JLabel(new ImageIcon("path/to/image.png"));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 2;
+        JLabel imageLabel = new JLabel(new ImageIcon("src/res/sprites/battle/null.png"));
         imageLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        editorPanel.add(imageLabel);
-
-        // Dropdown for selection
+        editorPanel.add(imageLabel, gbc);
+        
+        gbc.gridy++;
+        gbc.gridwidth = 1;
         JComboBox<String> dropdown = new JComboBox<>(pokedex);
-        editorPanel.add(Box.createRigidArea(new Dimension(0, 5)));
-        editorPanel.add(dropdown);
-
-        // Nickname Checkbox with conditional TextField
+        editorPanel.add(dropdown, gbc);
+        
+        gbc.gridy++;
         JCheckBox nicknameCheckBox = new JCheckBox("Nickname");
-        JTextField nicknameField = new JTextField();
+        editorPanel.add(nicknameCheckBox, gbc);
+        
+        gbc.gridx++;
+        JTextField nicknameField = new JTextField(10);
         nicknameField.setEnabled(false);
         nicknameCheckBox.addActionListener(e -> nicknameField.setEnabled(nicknameCheckBox.isSelected()));
-        editorPanel.add(nicknameCheckBox);
-        editorPanel.add(Box.createRigidArea(new Dimension(0, 5)));
-        editorPanel.add(nicknameField);
-
-        // Gender Toggle Button
+        editorPanel.add(nicknameField, gbc);
+        
+        gbc.gridx = 0;
+        gbc.gridy++;
         JButton genderButton = new JButton("M");
         genderButton.addActionListener(e -> genderButton.setText(genderButton.getText().equals("M") ? "F" : "M"));
-        editorPanel.add(Box.createRigidArea(new Dimension(0, 5)));
-        editorPanel.add(genderButton);
-
-        // Shiny Checkbox
-        JCheckBox shinyCheckBox = new JCheckBox("Is Shiny");
-        editorPanel.add(Box.createRigidArea(new Dimension(0, 5)));
-        editorPanel.add(shinyCheckBox);
-
-        // Byte Dropdown (1 to 100)
+        editorPanel.add(genderButton, gbc);
+        
+        gbc.gridx++;
+        JCheckBox shinyCheckBox = new JCheckBox("Shiny");
+        editorPanel.add(shinyCheckBox, gbc);
+        
+        gbc.gridx = 0;
+        gbc.gridy++;
         JComboBox<Byte> byteDropdown = new JComboBox<>();
-        for (byte i = 1; i <= 100; i++) {
+        for (byte i = 1; i <= 100; i++)
+        {
             byteDropdown.addItem(i);
         }
-        editorPanel.add(Box.createRigidArea(new Dimension(0, 5)));
-        editorPanel.add(byteDropdown);
-
-        // Integer TextField
-        JTextField intField = new JTextField();
-        editorPanel.add(Box.createRigidArea(new Dimension(0, 5)));
-        editorPanel.add(intField);
-
-        // Advanced Checkbox
+        editorPanel.add(byteDropdown, gbc);
+        
+        gbc.gridx++;
+        JTextField intField = new JTextField(10);
+        editorPanel.add(intField, gbc);
+        
+        gbc.gridx = 0;
+        gbc.gridy++;
         JCheckBox advancedCheckBox = new JCheckBox("Advanced");
-        editorPanel.add(Box.createRigidArea(new Dimension(0, 5)));
-        editorPanel.add(advancedCheckBox);
-
+        editorPanel.add(advancedCheckBox, gbc);
+        
+        gbc.gridx = 1;
+        gbc.gridy++;
+        gbc.gridwidth = 1;
+        JPanel advancedPanel = new JPanel(new GridLayout(2, 1, 5, 5));
+        JTextField testField1 = new JTextField("Advanced Field 1", 10);
+        JTextField testField2 = new JTextField("Advanced Field 2", 10);
+        testField1.setEnabled(false);
+        testField2.setEnabled(false);
+        advancedPanel.add(testField1);
+        advancedPanel.add(testField2);
+        editorPanel.add(advancedPanel, gbc);
+        
+        advancedCheckBox.addActionListener(e -> {
+            boolean isEnabled = advancedCheckBox.isSelected();
+            testField1.setEnabled(isEnabled);
+            testField2.setEnabled(isEnabled);
+        });
+        
         return editorPanel;
     }
-
-    private static JPanel createArenaPanel() {
-        // Todo: Implement arena panel
+    
+    private static JPanel createArenaPanel()
+    {
         JPanel panel = new JPanel();
         return panel;
     }

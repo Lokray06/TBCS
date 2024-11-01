@@ -1,5 +1,6 @@
 package system;
 
+import graphics.UI.NewJFrame;
 import system.Engine;
 
 import graphics.UIHandler;
@@ -24,7 +25,7 @@ public class Main
         
         Combat combat = new Combat(playerParty, enemyParty);
          */
-
-        UIHandler ui = new UIHandler();
+        
+        NewJFrame ui = new NewJFrame();
     }
 }
