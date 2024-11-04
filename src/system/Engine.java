@@ -1,5 +1,7 @@
 package system;
 
+import graphics.MyFrame;
+
 public class Engine
 {
     public static boolean running;
@@ -44,6 +46,5 @@ public class Engine
     
     private static void Render()
     {
-        System.out.println("Render");
     }
 }

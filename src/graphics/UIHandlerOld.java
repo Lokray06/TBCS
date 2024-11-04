@@ -2,30 +2,27 @@ package graphics;
 
 import lists.Party;
 import com.formdev.flatlaf.FlatLightLaf;
-import lists.data.PokemonDatabase;
 import pokemons.Pokemon;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Map;
 
 import static lists.data.PokemonDatabase.pokedexData;
 
-public class UIHandler
+public class UIHandlerOld
 {
     private static Pokemon selected = null;
     
-    public UIHandler()
+    public UIHandlerOld()
     {
         FlatLightLaf.setup();
         UIManager.put("Button.arc", 15);
         UIManager.put("Component.focusWidth", 1);
         
-        SwingUtilities.invokeLater(UIHandler::createAndShowGUI);
+        SwingUtilities.invokeLater(UIHandlerOld::createAndShowGUI);
     }
     
     private static void createAndShowGUI()
@@ -38,7 +35,7 @@ public class UIHandler
         frame.setSize(1000, 700);
         frame.setLayout(new BorderLayout());
         
-        frame.setIconImage(new ImageIcon("src/sprites/battle/null.png").getImage());
+        frame.setIconImage(new ImageIcon("src//sprites//battle//null.png").getImage());
         
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu("File");
