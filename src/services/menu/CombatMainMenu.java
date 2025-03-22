@@ -1,19 +1,12 @@
 package services.menu;
 
-import services.CombatPrinter;
-
 import java.util.Scanner;
 
 public class CombatMainMenu implements MenuInterface
 {
-    CombatPrinter printer = new CombatPrinter();
-    
     @Override
     public void display()
     {
-        //printer.clear();
-        System.out.println("");
-        System.out.println("");
         System.out.println("1. Attack");
         System.out.println("2. Bag");
         System.out.println("3. Run");
